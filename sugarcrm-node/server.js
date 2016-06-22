@@ -24,8 +24,6 @@ var username = "admin";
 var password = "admin";
 
 
-app.post('/postAlgo', function(req, res) {
-
   jsugar.login(domain, username, password, function(err, res) {
       var id = res.data.id;
 
@@ -36,10 +34,13 @@ app.post('/postAlgo', function(req, res) {
         query: '',
         deleted: false
       };
-      jsugar.call(domain, 'get_entries_count', params, function(error, res) {
+      jsugar.call(domain, 'get_entries_count', params, function(error, response) {
         // the server returns:
-        // res = { data: { result_count: '561' } }
-        console.log(res);
+        // response = { data: { result_count: '561' } }
+        console.log(response);
+        app.post('/postAlgo', function(req, res) {
+           res.send(response);
+        });
       });
 
       // Close the session:
@@ -51,7 +52,7 @@ app.post('/postAlgo', function(req, res) {
 // });
 
 
-});
+
 
 
 
